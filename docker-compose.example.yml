@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  hyperspace1:
+    image: hyper-cli
+    container_name: hyperspace1
+    ports:
+      - "50051:50051"  # 映射守护进程端口
+    environment:
+      - AIOS_KEY=your_aios_key_here  # 替换为您的 AIOS_KEY
+    restart: always
+    command: /root/start-hyperspace.sh
+
+  hyperspace2:
+    image: hyper-cli
+    container_name: hyperspace2
+    ports:
+      - "50052:50051"  # 映射守护进程端口
+    environment:
+      - AIOS_KEY=your_aios_key_here  # 替换为您的 AIOS_KEY
+    restart: always
+    command: /root/start-hyperspace.sh
+
+  # 可以按照相同格式添加更多服务实例
+  # 每个实例使用不同的端口映射
+  # hyperspace3:
+  #   image: hyper-cli
+  #   container_name: hyperspace3
+  #   ports:
+  #     - "50053:50051"
+  #   environment:
+  #     - AIOS_KEY=your_aios_key_here
+  #   restart: always
+  #   command: /root/start-hyperspace.sh 

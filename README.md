@@ -7,7 +7,7 @@
 ```
 .
 ├── Dockerfile              # Docker 镜像构建文件
-├── docker-compose.yml      # Docker Compose 配置文件
+├── docker-compose.example.yml  # Docker Compose 配置示例文件
 ├── start-hyperspace.sh     # 服务启动脚本
 └── README.md              # 项目说明文档
 ```
@@ -26,17 +26,26 @@
 docker build -t hyper-cli .
 ```
 
-2. 启动服务：
+2. 配置服务：
+```bash
+# 复制示例配置文件
+cp docker-compose.example.yml docker-compose.yml
+
+# 编辑配置文件，设置您的 AIOS_KEY
+vim docker-compose.yml
+```
+
+3. 启动服务：
 ```bash
 docker-compose up -d
 ```
 
-3. 查看服务状态：
+4. 查看服务状态：
 ```bash
 docker-compose ps
 ```
 
-4. 查看服务日志：
+5. 查看服务日志：
 ```bash
 docker-compose logs -f
 ```
@@ -46,9 +55,13 @@ docker-compose logs -f
 - 每个服务实例使用独立的端口映射
 - 通过环境变量 `AIOS_KEY` 配置服务密钥
 - 服务自动重启策略已配置
+- 配置文件说明：
+  - `docker-compose.example.yml`: 示例配置文件，不包含敏感信息
+  - `docker-compose.yml`: 实际使用的配置文件（需要自行创建，不要提交到 Git）
 
 ## 注意事项
 
 - 请确保 Docker 和 Docker Compose 已正确安装
 - 运行前请确保有足够的系统资源
-- 请妥善保管 AIOS_KEY 
+- 请妥善保管 AIOS_KEY
+- 不要将包含实际 AIOS_KEY 的 docker-compose.yml 提交到 Git 仓库 
