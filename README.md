@@ -12,6 +12,17 @@
 └── README.md              # 项目说明文档
 ```
 
+## 前置准备
+
+1. 下载 aios-cli 二进制文件：
+   - 访问 https://download.hyper.space/api/install 下载
+   - 或使用以下命令：
+   ```bash
+   curl https://download.hyper.space/api/install -o aios-cli-x86_64-unknown-linux-gnu.tar.gz
+   ```
+
+2. 将下载的文件放在项目根目录
+
 ## 功能特点
 
 - 支持多实例部署
