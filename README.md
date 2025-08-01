@@ -44,17 +44,17 @@ vim docker-compose.yml
 
 3. 启动服务：
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 4. 查看服务状态：
 ```bash
-docker-compose ps
+docker compose ps
 ```
 
 5. 查看服务日志：
 ```bash
-docker-compose logs -f
+docker compose logs -f
 ```
 
 ## 单个容器操作
@@ -62,16 +62,16 @@ docker-compose logs -f
 ### 启动、停止、重启单个容器
 ```bash
 # 启动单个容器
-docker-compose up -d <service-name>
+docker compose up -d <service-name>
 
 # 停止单个容器
-docker-compose stop <service-name>
+docker compose stop <service-name>
 
 # 重启单个容器
-docker-compose restart <service-name>
+docker compose restart <service-name>
 
 # 示例：重启 hyperspace-1 服务
-docker-compose restart hyperspace-1
+docker compose restart hyperspace-1
 ```
 
 ### 进入容器内部
@@ -86,20 +86,20 @@ exit
 ### 查看容器日志
 ```bash
 # 查看容器实时日志
-docker-compose logs -f <service-name>
+docker compose logs -f <service-name>
 
 # 查看容器最近日志
-docker-compose logs <service-name>
+docker compose logs <service-name>
 
 # 查看容器最后几行日志
-docker-compose logs --tail=50 <service-name>
+docker compose logs --tail=50 <service-name>
 
 # 或者使用 docker logs
 docker logs <container-name>
 docker logs --tail=50 <container-name>
 
 # 示例：查看 hyperspace-1 的最后 20 行日志
-docker-compose logs --tail=20 hyperspace-1
+docker compose logs --tail=20 hyperspace-1
 ```
 
 ## 配置说明
