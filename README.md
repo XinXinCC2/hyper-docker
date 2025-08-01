@@ -16,7 +16,7 @@
 
 拷贝模型文件到当前文件夹(不同系统位置不一样)：
    ```bash
-   cp -r ~/.cache/hyper/hf__TheBloke___phi-2-GGUF__phi-2.Q4_K_M.gguf ./
+   cp -r ~/.cache/hyperspace/models/hf__TheBloke___phi-2-GGUF__phi-2.Q4_K_M.gguf .
    ```
 
 ## 功能特点
@@ -76,14 +76,8 @@ docker-compose restart hyperspace-1
 
 ### 进入容器内部
 ```bash
-# 进入容器内部
-docker-compose exec <service-name> /bin/bash
-
-# 或者使用 docker exec
+# docker exec
 docker exec -it <container-name> /bin/bash
-
-# 示例：进入 hyperspace-1 容器
-docker-compose exec hyperspace-1 /bin/bash
 
 # 退出容器
 exit
