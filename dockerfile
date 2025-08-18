@@ -9,11 +9,12 @@ RUN apt-get update && \
         libgomp1 \
     && rm -rf /var/lib/apt/lists/*
 
-# 创建目标目录
-RUN mkdir -p /root/.cache/hyperspace/models/hf__TheBloke___phi-2-GGUF__phi-2.Q4_K_M.gguf
+# 关闭模型拷贝-直接采用映射
+# # 创建目标目录
+# RUN mkdir -p /root/.cache/hyperspace/models/hf__TheBloke___phi-2-GGUF__phi-2.Q4_K_M.gguf
 
-# 复制模型文件到容器
-COPY hf__TheBloke___phi-2-GGUF__phi-2.Q4_K_M.gguf /root/.cache/hyperspace/models/hf__TheBloke___phi-2-GGUF__phi-2.Q4_K_M.gguf
+# # 复制模型文件到容器
+# COPY hf__TheBloke___phi-2-GGUF__phi-2.Q4_K_M.gguf /root/.cache/hyperspace/models/hf__TheBloke___phi-2-GGUF__phi-2.Q4_K_M.gguf
 
 # 安装 aiOs CLI
 RUN curl https://download.hyper.space/api/install | bash
