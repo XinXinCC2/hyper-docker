@@ -1,3 +1,5 @@
+#!/bin/bash
+aios-cli kill
 
 # 启动守护进程
 echo "Starting aios-cli daemon..."
@@ -8,29 +10,18 @@ DAEMON_PID=$!
 sleep 5
 
 # 将密钥写入文件（使用 printf 避免换行符问题）
-echo "Writing AIOS key to file..."
-echo "$AIOS_KEY" > /root/my.pem
+# echo "Writing AIOS key to file..."
+# echo "$AIOS_KEY" > /root/my.pem
 
 # 密钥导入程序
-echo "Importing keys..."
-aios-cli hive import-keys /root/my.pem
+# echo "Importing keys..."
+# aios-cli hive import-keys /root/my.pem
 
 # 登录hive
 echo "Logging into hive..."
 aios-cli hive login
 sleep 1
 
-# 检查并下载所需模型
-echo "Checking required models..."
-if ! aios-cli models list | grep -q "phi-2.Q4_K_M.gguf"; then
-    echo "Downloading required model..."
-    aios-cli models add hf:TheBloke/phi-2-GGUF:phi-2.Q4_K_M.gguf
-fi
-
-# 分配 GPU 内存（这将自动选择最佳 tier）
-echo "Allocating GPU memory..."
-aios-cli hive allocate 2GB
-sleep 2
 
 # 连接hive
 echo "Connecting to hive..."
