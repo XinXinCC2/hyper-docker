@@ -1,7 +1,5 @@
 #!/bin/bash
 
-cd /Users/chenghh/Documents/区块链/空投/hyperspace/hyper_docker || exit 1
-
 echo "========== 启动批量 hyperspace 容器脚本 =========="
 echo "开始时间: $(date)"
 
