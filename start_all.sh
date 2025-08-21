@@ -3,7 +3,7 @@
 echo "========== 启动批量 hyperspace 容器脚本 =========="
 echo "开始时间: $(date)"
 
-for i in $(seq 1 100)
+for i in $(seq 1 1000)
 do
   service="hyperspace-$i"
   echo "[INFO] $(date '+%F %T') 正在启动 $service ..."
