@@ -117,3 +117,13 @@ docker compose logs --tail=20 hyperspace-1
 - 运行前请确保有足够的系统资源
 - 请妥善保管 AIOS_KEY
 - 不要将包含实际 AIOS_KEY 的 docker-compose.yml 提交到 Git 仓库 
+
+## 查看资源使用情况
+
+要查看 Docker 容器的 CPU、内存和磁盘使用情况，可以使用以下命令：
+
+```bash
+docker stats --format "table {{.Container}}\t{{.CPUPerc}}\t{{.MemUsage}}\t{{.BlockIO}}"
+```
+
+这将显示一个表格，列出每个容器的 CPU 使用率、内存使用情况和磁盘 I/O。 
