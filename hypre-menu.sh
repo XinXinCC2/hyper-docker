@@ -28,19 +28,9 @@ function start_containers() {
 
 function check_points() {
   echo "========== 查看积分 =========="
-  read -p "请输入起始序号 (默认为1): " start
-  read -p "请输入结束序号 (默认为5000): " end
-  start=${start:-1}
-  end=${end:-5000}
-  for i in $(seq $start $end)
-  do
-    service="hyperspace-$i"
-    if [ $(docker ps -q -f name=$service) ]; then
-      echo "[INFO] 正在查看 $service 的积分..."
-      docker exec $service aios-cli hive points
-    else
-      echo "[WARNING] $service 未运行，跳过查看积分。"
-    fi
+  for service in $(docker ps --format '{{.Names}}' | grep '^hyperspace-'); do
+    echo "[INFO] 正在查看 $service 的积分..."
+    docker exec $service aios-cli hive points
   done
 }
 
@@ -48,20 +38,10 @@ function collect_key_pairs() {
   echo "========== 收集密钥对 =========="
   output_file="key_pairs.txt"
   echo "" > $output_file
-  read -p "请输入起始序号 (默认为1): " start
-  read -p "请输入结束序号 (默认为5000): " end
-  start=${start:-1}
-  end=${end:-5000}
-  for i in $(seq $start $end)
-  do
-    service="hyperspace-$i"
-    if [ $(docker ps -q -f name=$service) ]; then
-      echo "[INFO] 正在收集 $service 的密钥对..."
-      echo "$service" >> $output_file
-      docker exec $service aios-cli hive whoami >> $output_file
-    else
-      echo "[WARNING] $service 未运行，跳过收集密钥对。"
-    fi
+  for service in $(docker ps --format '{{.Names}}' | grep '^hyperspace-'); do
+    echo "[INFO] 正在收集 $service 的密钥对..."
+    echo "$service" >> $output_file
+    docker exec $service aios-cli hive whoami >> $output_file
   done
 }
 
