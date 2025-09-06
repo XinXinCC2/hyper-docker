@@ -29,3 +29,5 @@ hf__TheBloke___phi-2-GGUF__phi-2.Q4_K_M.gguf/
 my.pem
 
 docker-compose.yml
+
+key_pairs.txt
