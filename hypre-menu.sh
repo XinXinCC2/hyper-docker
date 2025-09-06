@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Define color codes
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+
 function start_containers() {
   echo "========== 启动批量 hyperspace 容器 =========="
   read -p "请输入起始序号 (默认为1): " start
@@ -10,18 +16,18 @@ function start_containers() {
   do
     service="hyperspace-$i"
     if [ $(docker ps -q -f name=$service) ]; then
-      echo "[INFO] $service 已经在运行，跳过启动。"
+      echo -e "${BLUE}[INFO] $service 已经在运行，跳过启动。${NC}"
       continue
     fi
-    echo "[INFO] $(date '+%F %T') 正在启动 $service ..."
+    echo -e "${BLUE}[INFO] $(date '+%F %T') 正在启动 $service ...${NC}"
     docker compose -f docker-compose_1.yml up -d $service
     if [ $? -eq 0 ]; then
-      echo "[SUCCESS] $(date '+%F %T') $service 启动成功"
+      echo -e "${GREEN}[SUCCESS] $(date '+%F %T') $service 启动成功${NC}"
     else
-      echo "[ERROR] $(date '+%F %T') $service 启动失败"
+      echo -e "${RED}[ERROR] $(date '+%F %T') $service 启动失败${NC}"
     fi
     sleep_time=$((RANDOM % 6 + 5))
-    echo "[INFO] $(date '+%F %T') 等待 $sleep_time 秒后启动下一个服务..."
+    echo -e "${BLUE}[INFO] $(date '+%F %T') 等待 $sleep_time 秒后启动下一个服务...${NC}"
     sleep $sleep_time
   done
 }
@@ -29,7 +35,7 @@ function start_containers() {
 function check_points() {
   echo "========== 查看积分 =========="
   for service in $(docker ps --format '{{.Names}}' | grep '^hyperspace-'); do
-    echo "[INFO] 正在查看 $service 的积分..."
+    echo -e "${BLUE}[INFO] 正在查看 $service 的积分...${NC}"
     docker exec $service aios-cli hive points
   done
 }
@@ -39,7 +45,7 @@ function collect_key_pairs() {
   output_file="key_pairs.txt"
   echo "" > $output_file
   for service in $(docker ps --format '{{.Names}}' | grep '^hyperspace-'); do
-    echo "[INFO] 正在收集 $service 的密钥对..."
+    echo -e "${BLUE}[INFO] 正在收集 $service 的密钥对...${NC}"
     echo "$service" >> $output_file
     docker exec $service aios-cli hive whoami >> $output_file
   done
@@ -64,11 +70,11 @@ while true; do
       collect_key_pairs
       ;;
     4)
-      echo "退出程序。"
+      echo -e "${BLUE}退出程序。${NC}"
       break
       ;;
     *)
-      echo "无效的选项，请重新选择。"
+      echo -e "${RED}无效的选项，请重新选择。${NC}"
       ;;
   esac
 done 
