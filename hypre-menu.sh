@@ -51,13 +51,29 @@ function collect_key_pairs() {
   done
 }
 
+function stop_unstarted_containers() {
+  echo "========== 关闭未启动的容器 =========="
+  for service in $(docker ps --format '{{.Names}}' | grep '^hyperspace-'); do
+    echo "[INFO] 正在检查 $service 的状态..."
+    if ! docker exec $service aios-cli status | grep -q '50051'; then
+      echo "[INFO] $service 未启动，正在关闭并删除..."
+      docker stop $service
+      docker rm $service
+      echo "[SUCCESS] $service 已关闭并删除"
+    else
+      echo "[INFO] $service 正在运行"
+    fi
+  done
+}
+
 while true; do
   echo "请选择要执行的功能:"
   echo "1. 批量范围启动容器"
   echo "2. 查看积分"
   echo "3. 收集密钥对"
   echo "4. 退出"
-  read -p "请输入选项 (1/2/3/4): " option
+  echo "5. 关闭未启动的容器"
+  read -p "请输入选项 (1/2/3/4/5): " option
 
   case $option in
     1)
@@ -72,6 +88,9 @@ while true; do
     4)
       echo -e "${BLUE}退出程序。${NC}"
       break
+      ;;
+    5)
+      stop_unstarted_containers
       ;;
     *)
       echo -e "${RED}无效的选项，请重新选择。${NC}"
