@@ -9,6 +9,16 @@ DAEMON_PID=$!
 # 等待守护进程完全启动
 sleep 5
 
+# 判断环境中是否传入密钥, 如何密钥存在, 则使用密钥登录,没有则跳过
+if [ -n "$AIOS_KEY" ]; then
+    echo "Using AIOS_KEY to login..."
+    echo "$AIOS_KEY" > ./my.pem
+    aios-cli hive import-keys ./my.pem --verbose
+else
+    echo "No AIOS_KEY found, skipping login..."
+fi
+
+
 # 登录hive
 echo "Logging into hive..."
 aios-cli hive login
