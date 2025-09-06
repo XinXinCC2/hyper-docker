@@ -36,7 +36,7 @@ function check_points() {
   echo "========== 查看积分 =========="
   for service in $(docker ps --format '{{.Names}}' | grep '^hyperspace-'); do
     echo -e "${BLUE}[INFO] 正在查看 $service 的积分...${NC}"
-    docker exec $service aios-cli hive points
+    docker exec $service aios-cli hive points | head -n 2
   done
 }
 
