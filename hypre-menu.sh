@@ -66,14 +66,25 @@ function stop_unstarted_containers() {
   done
 }
 
+function stop_all_containers() {
+  echo "========== 关闭全部 hyperspace 容器 =========="
+  for service in $(docker ps --format '{{.Names}}' | grep '^hyperspace-'); do
+    echo -e "${BLUE}[INFO] 正在关闭 $service ...${NC}"
+    docker stop $service
+    docker rm $service
+    echo -e "${GREEN}[SUCCESS] $service 已关闭并删除${NC}"
+  done
+}
+
 while true; do
   echo "请选择要执行的功能:"
   echo "1. 批量范围启动容器"
   echo "2. 查看积分"
   echo "3. 收集密钥对"
-  echo "4. 退出"
-  echo "5. 关闭未启动的容器"
-  read -p "请输入选项 (1/2/3/4/5): " option
+  echo "4. 关闭未启动的容器"
+  echo "5. 关闭全部 hyperspace 容器"
+  echo "6. 退出"
+  read -p "请输入选项 (1/2/3/4/5/6): " option
 
   case $option in
     1)
@@ -86,11 +97,14 @@ while true; do
       collect_key_pairs
       ;;
     4)
-      echo -e "${BLUE}退出程序。${NC}"
-      break
+      stop_unstarted_containers
       ;;
     5)
-      stop_unstarted_containers
+      stop_all_containers
+      ;;
+    6)
+      echo -e "${BLUE}退出程序。${NC}"
+      break
       ;;
     *)
       echo -e "${RED}无效的选项，请重新选择。${NC}"
