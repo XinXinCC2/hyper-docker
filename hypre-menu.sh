@@ -15,7 +15,7 @@ function start_containers() {
   for i in $(seq $start $end)
   do
     service="hyperspace-$i"
-    if [ $(docker ps -q -f name=$service) ]; then
+    if [ -n "$(docker ps -q -f name=$service)" ]; then
       echo -e "${BLUE}[INFO] $service 已经在运行，跳过启动。${NC}"
       continue
     fi
